@@ -22,15 +22,21 @@ jobs:
           - version: ${{ inputs.latest-lts }}
     steps:
       - uses: actions/checkout@v4
+        if: ${{ matrix.node-version.version != '' }}
       - name: Use Node.js ${{ matrix.node-version.version }}
+        if: ${{ matrix.node-version.version != '' }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version.version }}
       - name: Install dependencies
+        if: ${{ matrix.node-version.version != '' }}
         run: npm install --ignore-scripts
       - name: Check for linting issues
+        if: ${{ matrix.node-version.version != '' }}
         run: npm run lint
       - name: Run tests
+        if: ${{ matrix.node-version.version != '' }}
         run: npm test
       - name: Check types
+        if: ${{ matrix.node-version.version != '' }}
         run: npm run check
