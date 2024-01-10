@@ -2,10 +2,14 @@ name: NodeJS CI workflow
 on:
   workflow_call:
     inputs:
-      only-latest-lts:
-        default: false
+      latest-lts:
+        default: '20.x'
         required: false
-        type: boolean
+        type: string
+      last-lts:
+        default: '18.x'
+        required: false
+        type: string
 
 jobs:
   nodejsci:
@@ -14,9 +18,8 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - version: '18.x'
-            if: ${{ inputs.only-latest-lts == false }}
-          - version: '20.x'
+          - version: ${{ inputs.last-lts }}
+          - version: ${{ inputs.latest-lts }}
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version.version }}
