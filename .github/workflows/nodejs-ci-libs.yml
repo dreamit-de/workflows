@@ -1,6 +1,12 @@
 name: NodeJS CI workflow for libraries
 on:
   workflow_call:
+    inputs:
+      runMutationTests:
+        description: 'Defines if mutation tests should be run'
+        default: false
+        required: false
+        type: boolean
 
 jobs:
   nodejscilibs:
@@ -25,3 +31,6 @@ jobs:
         run: npm test
       - name: Check types
         run: npm run check
+      - name: Run mutation tests
+        if: ${{ inputs.runMutationTests }}
+        run: npm run mutationtestCI
